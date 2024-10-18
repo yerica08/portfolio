@@ -1,59 +1,78 @@
-"use strict";
+'use strict';
 
 loading();
 function loading() {
-  // 1.5초 후 로딩창 사라짐
-  const roundLoding = document.querySelector(".loading");
-  const text1 = document.querySelector(".text1");
-  const text2 = document.querySelector(".text2");
-  const loading = document.querySelector(".loading_page");
-  const bg = document.querySelectorAll(".bg");
-  const plane = document.querySelector(".plane");
-  setTimeout(() => {
-    roundLoding.style.opacity = "0";
+    // 1.5초 후 로딩창 사라짐
+    const roundLoding = document.querySelector('.loading');
+    const text1 = document.querySelector('.text1');
+    const text2 = document.querySelector('.text2');
+    const loading = document.querySelector('.loading_page');
+    const bg = document.querySelectorAll('.bg');
+    const plane = document.querySelector('.plane');
     setTimeout(() => {
-      text1.style.opacity = "1";
-      text1.style.transform = "translate(-50%, -50%)";
-      setTimeout(() => {
-        text1.style.opacity = "0";
-        loading.style.backgroundColor = "transparent";
+        roundLoding.style.opacity = '0';
         setTimeout(() => {
-          text2.style.opacity = "1";
-          text2.style.transform = "translate(-50%, -50%)";
-          setTimeout(() => {
-            text2.style.opacity = "0";
+            text1.style.opacity = '1';
+            text1.style.transform = 'translate(-50%, -50%)';
             setTimeout(() => {
-              bg.forEach((a) => {
-                a.style.zIndex = "-1";
-              });
-              setTimeout(() => {
-                loading.style.display = "none";
-                plane.style.opacity = 1;
-              }, 500);
-            }, 500);
-          }, 500);
+                text1.style.opacity = '0';
+                loading.style.backgroundColor = 'transparent';
+                setTimeout(() => {
+                    text2.style.opacity = '1';
+                    text2.style.transform = 'translate(-50%, -50%)';
+                    setTimeout(() => {
+                        text2.style.opacity = '0';
+                        setTimeout(() => {
+                            bg.forEach((a) => {
+                                a.style.zIndex = '-1';
+                            });
+                            setTimeout(() => {
+                                loading.style.display = 'none';
+                                plane.style.opacity = 1;
+                            }, 500);
+                        }, 500);
+                    }, 500);
+                }, 1000);
+            }, 300);
         }, 1000);
-      }, 300);
-    }, 1000);
-  }, 1500);
+    }, 1500);
 }
 
 homePage();
 function homePage() {
-  const plane = document.querySelector(".plane");
-  const worldFrame = document.querySelector(".home .world_frame");
-  const world = document.querySelector(".home .world_frame .world");
-  const castle = document.querySelector(".home .world .castle");
-  const cloud = document.querySelector(".home .world .cloud");
-  const textWrap = document.querySelector(".home .text_wrap");
-  const text = document.querySelector(".home .text_wrap .text");
-  const portfolio = document.querySelector("home .text_wrap .portfolio");
-  plane.addEventListener("click", () => {
-    worldFrame.classList.add("windowFrame");
-    world.classList.add("windowFrame");
-    castle.style.opacity = "1";
-    cloud.style.opacity = "1";
-    textWrap.style.opacity = "1";
-    text.style.transform = "translate(-100%, 0%)";
-  });
+    const plane = document.querySelector('.plane');
+    const worldFrame = document.querySelector('.home .world_frame');
+    const world = document.querySelector('.home .world_frame .world');
+    const castle = document.querySelector('.home .world .castle');
+    const cloud = document.querySelector('.home .world .cloud');
+    const textWrap = document.querySelector('.home .text_wrap');
+    const subText = document.querySelector('.home .sub_text');
+    const deco = document.querySelector('.home .deco');
+    plane.addEventListener('click', () => {
+        plane.style.opacity = 0;
+        worldFrame.classList.add('windowFrame');
+        world.classList.add('windowFrame');
+        castle.style.opacity = '1';
+        cloud.style.opacity = '1';
+        textWrap.style.opacity = '1';
+        subText.style.opacity = '1';
+        subText.style.transform = 'translateY(0)';
+        deco.style.opacity = '1';
+
+        //register the plugin (just once)
+        gsap.registerPlugin(MotionPathPlugin);
+
+        gsap.to('#plane1', {
+            duration: 5,
+            repeat: false,
+            yoyo: false,
+            ease: 'power1.inOut',
+            motionPath: {
+                path: '#path',
+                align: '#path',
+                autoRotate: true,
+                alignOrigin: [0.5, 0.5],
+            },
+        });
+    });
 }
